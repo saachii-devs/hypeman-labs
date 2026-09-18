@@ -30,6 +30,17 @@ npm run lint
     └── video/            footer loop
 ```
 
+## Work catalog
+
+Projects in the "Our Woahrk" section come from `data/work.ts`. Each entry has a slug, title, tags and an `images` list; the first image is the tile cover and clicking a tile opens every image in a fullscreen viewer (arrows, thumbnails, keyboard and swipe).
+
+To add more shots to a project:
+
+1. Drop the file in `assets/images/work/<slug>/`, for example `assets/images/work/khataserve/02.png`.
+2. In `data/work.ts`, import it and push `{ src, alt }` onto that project's `images` array.
+
+To add a new project, create its folder, then add a new object to the `WORK` array.
+
 ## Supabase
 
 Project ref: `gjhwuhwqgniykfydlygs`. Keys live in `.env.local` (git-ignored); `.env.example` lists the names.

@@ -1,7 +1,8 @@
 "use client";
 
+import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import logo from "@/assets/images/logo.png";
 
 const LINKS = [
@@ -11,8 +12,14 @@ const LINKS = [
   { id: "contact", label: "Contact", hover: "GO" },
 ] as const;
 
+const OPEN: [number, number, number, number] = [0.2, 1, 0.3, 1];
+
 export function Nav() {
   const [active, setActive] = useState<string>("top");
+  /* phones only: the links live in a drawer behind the hamburger */
+  const [open, setOpen] = useState(false);
+  const nav = useRef<HTMLElement>(null);
+  const reduce = useReducedMotion();
 
   /* highlight the section currently in view */
   useEffect(() => {
@@ -29,24 +36,56 @@ export function Nav() {
     return () => spy.disconnect();
   }, []);
 
-  const link = (i: number) => {
+  /* while the phone menu is open, Esc or a tap outside closes it */
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const onDown = (e: PointerEvent) => {
+      if (e.target instanceof Node && !nav.current?.contains(e.target)) setOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("pointerdown", onDown);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("pointerdown", onDown);
+    };
+  }, [open]);
+
+  const anchor = (i: number) => {
     const { id, label, hover } = LINKS[i];
     return (
-      <li>
-        <a href={`#${id}`} className={active === id ? "active" : undefined} data-hover={hover}>
-          {label}
-        </a>
-      </li>
+      <a
+        href={`#${id}`}
+        className={active === id ? "active" : undefined}
+        data-hover={hover}
+        onClick={() => setOpen(false)}
+      >
+        {label}
+      </a>
     );
   };
 
   return (
-    <nav className="nav">
-      <ul>
-        {link(0)}
-        {link(1)}
+    <nav ref={nav} className={`nav${open ? " open" : ""}`}>
+      <button
+        type="button"
+        className="nav-burger"
+        aria-expanded={open}
+        aria-controls="nav-menu"
+        aria-label={open ? "Close menu" : "Open menu"}
+        onClick={() => setOpen((o) => !o)}
+      >
+        <span aria-hidden="true" />
+        <span aria-hidden="true" />
+        <span aria-hidden="true" />
+      </button>
+
+      {/* desktop row; on phones only the logo is visible */}
+      <ul className="nav-row">
+        <li>{anchor(0)}</li>
+        <li>{anchor(1)}</li>
         <li className="nav-logo">
-          <a href="#top" className="brand" data-hover="HI">
+          <a href="#top" className="brand" data-hover="HI" onClick={() => setOpen(false)}>
             <Image
               src={logo}
               alt="Hypemann"
@@ -55,9 +94,44 @@ export function Nav() {
             />
           </a>
         </li>
-        {link(2)}
-        {link(3)}
+        <li>{anchor(2)}</li>
+        <li>{anchor(3)}</li>
       </ul>
+
+      {/* phone drawer: the panel grows open and the links stagger in */}
+      <AnimatePresence initial={false}>
+        {open && (
+          <m.div
+            key="drawer"
+            id="nav-menu"
+            className="nav-drawer"
+            initial={reduce ? false : { height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={reduce ? { opacity: 0 } : { height: 0, opacity: 0 }}
+            transition={{
+              height: { duration: 0.42, ease: OPEN },
+              opacity: { duration: 0.22 },
+            }}
+          >
+            <ul>
+              {LINKS.map((l, i) => (
+                <m.li
+                  key={l.id}
+                  initial={reduce ? false : { opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 8, transition: { duration: 0.15 } }}
+                  transition={{
+                    opacity: { duration: 0.28, delay: 0.08 + i * 0.06 },
+                    y: { duration: 0.42, ease: OPEN, delay: 0.08 + i * 0.06 },
+                  }}
+                >
+                  {anchor(i)}
+                </m.li>
+              ))}
+            </ul>
+          </m.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }

@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HYPEMAN — we make brands loud</title>
+<meta name="description" content="Hypeman is a creative studio cooking logos, 3D mascots, flyers, merch drops and hype campaigns.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Matemasie&family=Archivo:wdth,wght@125,500&family=Outfit:wght@500;600&family=Bagel+Fat+One&family=Bungee&family=DM+Mono:wght@400;500&family=Permanent+Marker&family=Rubik+Wet+Paint&family=Roboto+Slab:wght@600&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  @font-face{
+    font-family:"Nauryz RedKeds";
+    src:url("assets/fonts/NauryzRedKeds-s1.woff2") format("woff2");
+    font-weight:400;font-style:normal;font-display:swap;
+  }
+  @font-face{
+    font-family:"Nauryz Red Keds";
+    src:url("assets/fonts/NauryzRedKeds-s1.woff2") format("woff2");
+    font-weight:400;font-style:normal;font-display:swap;
+  }
+  @font-face{
+    font-family:"Comic Bold";
+    src:url("assets/fonts/comicbold.ttf") format("truetype");
+    font-weight:400;font-style:normal;font-display:swap;
+  }
+  :root{
+    --ink:#0d0d0d;
+    --bone:#f3ecdf;
+    --paper:#fbf7ef;
+    --red:#960D1D;
+    --yolk:#ffd21f;
+    --cobalt:#2f4dff;
+    --sage:#7fa47f;
+    --peach:#f7b9a6;
+    --lilac:#e7d9ff;
+    --mint:#bfeccd;
+    --orange:#ff6a1f;
+
+    --f-bubble:"Bagel Fat One", "Arial Black", sans-serif;
+    --f-drip:"Rubik Wet Paint", "Impact", sans-serif;
+    --f-marker:"Permanent Marker", "Comic Sans MS", cursive;
+    --f-block:"Bungee", "Impact", sans-serif;
+    --f-body:"Syne", "Trebuchet MS", sans-serif;
+    --f-mono:"DM Mono", ui-monospace, monospace;
+
+    --gutter:clamp(16px, 4vw, 56px);
+    --radius:28px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--f-body);
+    background:var(--bone);
+    color:var(--ink);
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (hover:hover) and (pointer:fine){ body, a, button{cursor:none} }
+  img,svg{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;border:0;background:none;color:inherit}
+  ::selection{background:var(--yolk);color:var(--ink)}
+
+  /* grain */
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:9998;opacity:.09;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- cursor ---------- */
+  .cursor{
+    position:fixed;left:0;top:0;width:26px;height:26px;border-radius:50%;
+    background:var(--yolk);border:2.5px solid var(--ink);
+    pointer-events:none;z-index:9999;transform:translate(-50%,-50%);
+    display:grid;place-items:center;
+    font:700 10px/1 var(--f-mono);letter-spacing:.05em;color:var(--ink);
+    transition:width .25s cubic-bezier(.2,1.6,.4,1),height .25s cubic-bezier(.2,1.6,.4,1),background .2s;
+  }
+  .cursor span{opacity:0;transition:opacity .15s}
+  .cursor.big{width:74px;height:74px;background:var(--red);color:#fff}
+  .cursor.big span{opacity:1}
+  @media (hover:none), (pointer:coarse){ .cursor{display:none} }
+  .cursor.hide{opacity:0}
+  /* chrome arrow cursor inside the hero (hotspot at the arrow tip) */
+  .hero, .hero a, .hero button{cursor:url("assets/images/cursor.png") 3 2, auto}
+
+  /* ---------- hero sticker trail ---------- */
+  .trail-img{
+    position:fixed;left:0;top:0;z-index:9997;pointer-events:none;
+    width:clamp(44px, 4.5vw, 68px);height:auto;
+    transform:translate(-50%,-50%) rotate(var(--r, 0deg)) scale(0);
+    animation:trailPop .7s cubic-bezier(.2,.7,.2,1) forwards;will-change:transform,opacity;backface-visibility:hidden;
+    filter:drop-shadow(0 6px 10px rgba(0,0,0,.18));
+  }
+  @keyframes trailPop{
+    0%{transform:translate3d(-50%,-50%,0) rotate(var(--r, 0deg)) scale(0);opacity:0}
+    12%{opacity:1}
+    40%{transform:translate3d(-50%,-54%,0) rotate(var(--r, 0deg)) scale(1);opacity:1}
+    65%{transform:translate3d(-50%,-62%,0) rotate(var(--r, 0deg)) scale(1);opacity:1}
+    100%{transform:translate3d(-50%,-80%,0) rotate(var(--r, 0deg)) scale(.94);opacity:0}
+  }
+
+  /* ---------- nav ---------- */
+  .nav{
+    position:fixed;top:calc(var(--frame) + 22px);left:50%;transform:translateX(-50%);z-index:100;
+    width:min(900px, calc(100% - 2*var(--gutter)));
+    background:var(--red);border-radius:999px;padding:10px 40px;
+  }
+  .nav ul{display:flex;align-items:center;justify-content:space-between;list-style:none;gap:8px}
+  .nav ul>li{flex:1;text-align:center}
+  .nav ul a{
+    display:inline-block;padding:5px 22px;border-radius:999px;border:2px solid transparent;white-space:nowrap;
+    font:600 18px/1.2 "Roboto Slab", Georgia, serif;color:#fff;
+    transition:background .2s, color .2s;
+  }
+  .nav ul a:hover{background:#6e0a15}
+  .nav ul a.active{background:#fff;color:var(--ink);border-color:var(--ink)}
+  .nav-logo{flex:1.3;position:relative;z-index:1}
+  .nav ul a.brand,
+  .nav ul a.brand:hover{
+    display:block;width:clamp(190px, 26vw, 260px);margin:-54px auto -48px;padding:0;
+    background:none;border:0;transition:transform .15s;
+  }
+  .nav ul a.brand img{width:100%;height:auto;filter:drop-shadow(0 2px 2px rgba(0,0,0,.25))}
+  .nav ul a.brand:hover{transform:scale(1.04)}
+  @media (max-width:700px){
+    .nav{border-radius:24px;padding:10px 12px}
+    .nav ul{flex-wrap:wrap;justify-content:center;gap:6px 2px}
+    .nav ul>li{flex:0 0 auto}
+    .nav-logo{flex-basis:100%;order:-1}
+    .nav ul a{font-size:15px;padding:7px 14px}
+    .nav ul a.brand,.nav ul a.brand:hover{width:210px;margin:-34px auto 0}
+    .hero{padding-top:188px}
+  }
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:14px 22px;border-radius:999px;border:2.5px solid var(--ink);
+    background:var(--red);color:#fff;font:400 15px/1 var(--f-block);letter-spacing:.02em;
+    box-shadow:4px 4px 0 var(--ink);transition:transform .15s, box-shadow .15s;
+    white-space:nowrap;
+  }
+  .btn:hover{transform:translate(-2px,-2px) rotate(-2deg);box-shadow:6px 6px 0 var(--ink)}
+  .btn:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--ink)}
+  .btn.yolk{background:var(--yolk);color:var(--ink)}
+
+  /* ---------- red frame around the hero ---------- */
+  :root{--frame:clamp(14px, 2.3vw, 36px)}
+  .hero-frame{position:relative;isolation:isolate;overflow:hidden;background:var(--bone);padding:var(--frame) var(--frame) 0}
+  /* warped red + cream checkerboard, drawn in CSS and bent with an SVG displacement filter */
+  .hero-frame::before{
+    content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+    background:url("assets/images/checker.svg") 0 0 / 3200px 1800px no-repeat;
+  }
+  .hero-frame > .hero{position:relative;z-index:1}
+  /* same frame continues down both sides of the page and closes under the footer */
+
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;isolation:isolate;overflow:hidden;
+    min-height:calc(100vh - var(--frame));display:flex;align-items:center;justify-content:center;
+    padding:calc(var(--frame) + 100px) var(--gutter) 90px;border-radius:clamp(28px, 4vw, 56px) clamp(28px, 4vw, 56px) 0 0;
+    background:var(--bone);color:var(--ink);
+  }
+  /* subtle colored grid */
+  .hero::before{
+    content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+    background:
+      linear-gradient(rgba(196,170,130,.22) 1.5px, transparent 1.5px),
+      linear-gradient(90deg, rgba(196,170,130,.22) 1.5px, transparent 1.5px);
+    background-size:110px 110px;
+    -webkit-mask-image:radial-gradient(ellipse at center, #000 45%, transparent 100%);
+    mask-image:radial-gradient(ellipse at center, #000 45%, transparent 100%);
+  }
+  .hero-inner{position:relative;z-index:2;width:80%;margin:0 auto;text-align:center}
+  @media (max-width:700px){ .hero-inner{width:100%} }
+  .headline{
+    font:400 clamp(3.2rem, min(9.6vw, 14.5vh), 9.8rem)/1.1 "Anton", "Impact", "Arial Narrow", sans-serif;
+    text-transform:uppercase;letter-spacing:.005em;color:var(--ink);
+  }
+  .headline .line{display:flex;justify-content:center;align-items:center;gap:0 .22em;flex-wrap:wrap}
+  .headline .w{display:inline-block;animation:rise .9s cubic-bezier(.2,1.4,.4,1) both;white-space:nowrap}
+  .headline .line:nth-child(2) .w{animation-delay:.1s}
+  .headline .line:nth-child(3) .w{animation-delay:.2s}
+  .headline .amp{font-family:"Nauryz RedKeds", "Matemasie", "Anton", sans-serif;font-size:.9em;line-height:.9;display:inline-block;vertical-align:baseline}
+  .headline .nrk{font-family:"Nauryz Red Keds", "Anton", sans-serif;font-weight:400;letter-spacing:0}
+  .headline .mascot{height:1.15em;width:auto;flex:0 0 auto;transform:rotate(-8deg);margin-right:-.05em;
+    filter:drop-shadow(0 0 1.5px #fff) drop-shadow(3px 4px 0 var(--ink))}
+  .headline .yel{
+    background:none;color:#ffd21f;-webkit-text-fill-color:#ffd21f;
+    text-shadow:.01em .01em 0 var(--ink), .02em .02em 0 var(--ink), .03em .03em 0 var(--ink), .04em .04em 0 var(--ink), .05em .05em 0 var(--ink), .06em .06em 0 var(--ink), .07em .07em 0 var(--ink), .08em .08em 0 var(--ink);
+  }
+  .headline .grad{
+    background:linear-gradient(90deg,#ff5fb8 0%,#e26be0 45%,#8f5cff 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  @keyframes rise{0%{transform:translateY(35%);opacity:0}100%{transform:none;opacity:1}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* eyes sticker inline in line 2 */
+  .headline .eyes{
+    width:2.1em;height:1.05em;flex:0 0 auto;margin:0 .06em;
+    transform:rotate(-6deg);filter:drop-shadow(2px 3px 0 rgba(0,0,0,.18));
+  }
+
+  /* gif sticker inline in line 2 */
+  .headline .gifbox{
+    position:relative;flex:0 0 auto;height:.95em;width:auto;aspect-ratio:2.22222;margin:0;
+    border:3px solid var(--ink);border-radius:999px;overflow:hidden;background:#111;
+    transform:rotate(-6deg);box-shadow:3px 4px 0 rgba(0,0,0,.18);
+  }
+  .headline .gifbox img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+  .headline .gifbox.red{aspect-ratio:1.5;background:var(--red);transform:rotate(5deg)}
+
+  .hero-sub{
+    margin:clamp(18px, 2.6vw, 34px) auto 0;max-width:560px;
+    font:500 clamp(1rem, 1.35vw, 1.25rem)/1.45 var(--f-body);color:#3a3a3a;
+    animation:rise .9s .3s cubic-bezier(.2,1.4,.4,1) both;
+  }
+  .hero-cta{
+    display:inline-flex;align-items:center;gap:14px;margin-top:clamp(22px, 3vw, 40px);
+    padding:16px 30px;border-radius:999px;border:2.5px solid var(--ink);background:var(--paper);
+    font:400 clamp(1.05rem, 1.5vw, 1.35rem)/1 "Anton", "Impact", sans-serif;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--ink);box-shadow:5px 5px 0 var(--ink);transition:transform .15s, box-shadow .15s;
+    animation:rise .9s .4s cubic-bezier(.2,1.4,.4,1) both;
+  }
+  .hero-cta em{font-style:normal;font-size:.7em;padding:5px 9px;border-radius:6px;background:var(--yolk);letter-spacing:.04em}
+  .hero-cta:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+  .hero-cta:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--ink)}
+
+  /* red pixel stickers around the headline */
+  .hero-sticker{
+    position:absolute;z-index:1;pointer-events:none;height:auto;
+    animation:stickerBob 5s ease-in-out infinite;
+    filter:drop-shadow(0 4px 0 rgba(0,0,0,.15));
+  }
+  .s-fire{width:clamp(70px, 8vw, 120px);right:19%;top:26%;transform:rotate(20deg);z-index:100;}
+  .s-peace{width:clamp(70px, 7vw, 100px);left:10%;top:40%;transform:rotate(0deg);animation-delay:-1.7s;z-index:100;}
+  .s-smiley{width:clamp(70px, 8vw, 120px);right:19%;bottom:31%;transform:rotate(-8deg);animation-delay:-3.2s;z-index:100;}
+  @keyframes stickerBob{0%,100%{translate:0 0}50%{translate:0 -10px}}
+  /* halftone art on white: multiply drops the white onto the cream */
+  .s-comic{mix-blend-mode:multiply}
+  .s-comic,.s-star,.s-tension{filter:none;z-index:1}
+  .s-star,.s-tension{animation:none}
+  .s-comic{width:clamp(120px, 13vw, 210px);left:6%;bottom:12%;transform:rotate(-10deg);animation-delay:-2.6s}
+  .s-star{width:clamp(150px, 17vw, 280px);right:5%;top:14%;transform:rotate(12deg)}
+  .s-tension{width:clamp(130px, 15vw, 250px);left:6%;top:22%;transform:rotate(-6deg)}
+  @media (max-width:900px){
+    .s-fire{width:60px;right:30%;top:22%}
+    .s-peace{width:50px;left:3%;top:50%}
+    .s-smiley{width:60px;right:4%;bottom:10%}
+    .s-comic{width:90px;left:2%;bottom:6%}
+    .s-star{width:110px;right:2%;top:12%}
+    .s-tension{width:90px;left:20%;top:16%}
+  }
+
+  .btn.ghost{background:var(--paper);color:var(--ink)}
+
+  @media (max-width:900px){
+    .hero{padding:calc(var(--frame) + 100px) var(--gutter) 80px}
+    .headline .line{gap:0 .18em}
+  }
+
+  /* ---------- marquee ---------- */
+  .marquees{position:relative;z-index:3;margin-top:0;background:transparent;padding:0 0 clamp(48px, 7vw, 96px)}
+  .marquee{
+    position:relative;display:flex;overflow:hidden;white-space:nowrap;width:100%;
+    background:var(--yolk);color:var(--ink);border-block:2.5px solid var(--ink);box-shadow:0 12px 0 var(--ink);
+  }
+  /* comic halftone dots over the yellow */
+  .marquee::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:url("assets/images/halftone.svg") 0 0 / auto 100% repeat-x;
+  }
+  .marquee .track{position:relative}
+  .marquee .track{display:flex;flex-shrink:0;animation:scroll 14s linear infinite}
+  .marquee span{
+    display:inline-flex;align-items:center;gap:.5em;padding:14px .6em;
+    font:400 clamp(1.6rem, 4vw, 3.2rem)/1 "Comic Bold", var(--f-bubble);
+    color:#fff;letter-spacing:-.04em;
+    text-shadow:
+      1px 1px 0 var(--ink), 2px 2px 0 var(--ink), 3px 3px 0 var(--ink), 4px 4px 0 var(--ink), 5px 5px 0 var(--ink), 6px 6px 0 var(--ink),
+      -2px -2px 0 var(--ink), 2px -2px 0 var(--ink), -2px 2px 0 var(--ink), 0 -2px 0 var(--ink), -2px 0 0 var(--ink), 2px 0 0 var(--ink), 0 2px 0 var(--ink);
+  }
+  .marquee span em{font-style:normal;font-family:var(--f-block);font-size:.6em}
+
+  @keyframes scroll{to{transform:translateX(-100%)}}
+
+  /* ---------- section chrome ---------- */
+  section{position:relative}
+  .wrap{width:80%;margin:0 auto;padding:clamp(70px, 10vw, 140px) 0}
+  @media (max-width:700px){ .wrap{width:calc(100% - 2*var(--gutter))} }
+  .sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:clamp(30px, 5vw, 60px)}
+  .sec-tag{font:500 13px/1 var(--f-mono);text-transform:lowercase;display:inline-block;padding:7px 12px;border:2px solid currentColor;border-radius:999px;margin-bottom:16px}
+  .sec-title{font:400 clamp(3rem, 9vw, 8rem)/.85 var(--f-bubble);letter-spacing:-.03em}
+  .sec-title .drip{font-family:var(--f-drip);color:var(--red);display:inline-block;transform:rotate(-4deg)}
+  .sec-title .mk{font-family:var(--f-marker);font-size:.55em;color:var(--cobalt);vertical-align:middle;display:inline-block;transform:rotate(-8deg)}
+  .sec-note{max-width:360px;font:500 1.05rem/1.5 var(--f-body)}
+
+  .reveal{opacity:0;transform:translateY(40px) rotate(-1deg);transition:opacity .7s, transform .9s cubic-bezier(.2,1.3,.4,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---------- abilities ---------- */
+  .abilities{background:#0b0b0b;color:#fff;border-radius:48px 48px 0 0;margin-top:-10px}
+  .ab-title{
+    font:400 clamp(3.6rem, 10vw, 9.4rem)/.95 "Anton", "Impact", "Arial Narrow", sans-serif;
+    text-transform:uppercase;letter-spacing:.005em;color:#fff;
+  }
+  .ab-title .row{display:flex;align-items:center;gap:.18em}
+  .ab-title .gif{display:inline-block;width:2.35em;height:.98em;border-radius:999px;overflow:hidden;flex:0 0 auto;background:#222}
+  .ab-title .gif img{width:100%;height:100%;object-fit:cover;display:block}
+
+  .ab-intro{
+    display:grid;grid-template-columns:minmax(180px, 1fr) 2.4fr;gap:clamp(30px, 8vw, 140px);align-items:start;
+    margin-top:clamp(40px, 6vw, 90px);
+  }
+  .ab-more{
+    display:inline-block;padding-bottom:22px;border-bottom:1px solid rgba(255,255,255,.6);
+    font:700 clamp(1.1rem, 1.6vw, 1.6rem)/1 var(--f-body);letter-spacing:-.01em;text-transform:uppercase;color:#fff;
+    transition:color .2s, border-color .2s;
+  }
+  .ab-more:hover{color:var(--yolk);border-color:var(--yolk)}
+  .ab-intro p{font:500 clamp(1.15rem, 2vw, 2rem)/1.45 var(--f-body);max-width:26em}
+
+  .ab-tabs{display:flex;gap:clamp(30px, 6vw, 110px);margin-top:clamp(80px, 12vw, 180px);flex-wrap:wrap}
+  .ab-tab{
+    position:relative;padding:0 0 18px;background:none;border:0;cursor:none;
+    font:400 clamp(2.4rem, 5.5vw, 5.2rem)/1 "Anton", "Impact", sans-serif;text-transform:uppercase;letter-spacing:.01em;color:#fff;
+    transition:color .2s;
+  }
+  .ab-tab::after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:var(--yolk);transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.2,1,.3,1)}
+  .ab-tab.on{color:var(--yolk)}
+  .ab-tab.on::after{transform:scaleX(1)}
+  .ab-tab:hover{color:var(--yolk)}
+
+  .ab-panel{display:none;margin-top:clamp(40px, 6vw, 100px)}
+  .ab-panel.on{display:block;animation:panelIn .4s ease both}
+  @keyframes panelIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+  .ab-item{border-bottom:1px solid rgba(255,255,255,.14)}
+  .ab-item summary{
+    list-style:none;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:clamp(18px, 3vw, 48px);
+    padding:clamp(28px, 4vw, 56px) 0;cursor:none;
+  }
+  .ab-item summary::-webkit-details-marker{display:none}
+  .ab-item .n{font:500 clamp(1.3rem, 2.2vw, 2.4rem)/1 var(--f-body);color:rgba(255,255,255,.45);min-width:2.2em}
+  .ab-item .t{font:700 clamp(1.5rem, 2.6vw, 2.6rem)/1.15 var(--f-body);letter-spacing:-.01em;transition:color .2s}
+  .ab-item summary:hover .t{color:var(--yolk)}
+  .ab-item .pm{position:relative;width:28px;height:28px;flex:0 0 auto}
+  .ab-item .pm::before,.ab-item .pm::after{content:"";position:absolute;left:0;top:50%;width:100%;height:2px;background:#fff;transition:transform .3s}
+  .ab-item .pm::after{transform:rotate(90deg)}
+  .ab-item[open] > summary .pm::after{transform:rotate(0deg)}
+  .ab-item p{
+    margin:-10px 0 clamp(28px, 4vw, 56px);padding-left:calc(2.2em + clamp(18px, 3vw, 48px));
+    font:500 clamp(1rem, 1.5vw, 1.55rem)/1.55 var(--f-body);color:rgba(255,255,255,.62);max-width:44em;
+    animation:panelIn .35s ease both;
+  }
+  /* nested items inside a service */
+  .ab-sub{margin:-6px 0 clamp(20px, 3vw, 40px);padding-left:calc(2.2em + clamp(18px, 3vw, 48px));animation:panelIn .35s ease both}
+  .ab-sub .ab-item{border-bottom:1px solid rgba(255,255,255,.1)}
+  .ab-sub .ab-item:last-child{border-bottom:0}
+  .ab-sub .ab-item summary{padding:clamp(18px, 2.4vw, 34px) 0}
+  .ab-sub .ab-item .n{font-size:clamp(1rem, 1.5vw, 1.5rem)}
+  .ab-sub .ab-item .t{font-size:clamp(1.2rem, 2vw, 2rem)}
+  .ab-sub .ab-item .pm{width:22px;height:22px}
+  .ab-sub .ab-item p{margin-top:-4px;margin-bottom:clamp(18px, 2.4vw, 34px)}
+  @media (max-width:760px){
+    .ab-intro{grid-template-columns:1fr;gap:28px}
+    .ab-item p{padding-left:0}
+    .ab-sub{padding-left:0}
+  }
+
+  /* ---------- work (our woahrk slider) ---------- */
+  .work{background:#0b0b0b;color:#fff}
+  .woah-head{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;margin-bottom:clamp(40px, 7vw, 110px)}
+  .woah-title{
+    font:400 clamp(3.6rem, 10vw, 9.4rem)/.95 "Anton", "Impact", "Arial Narrow", sans-serif;
+    text-transform:uppercase;letter-spacing:.005em;color:#fff;
+  }
+  .woah-title .row{display:flex;align-items:center;gap:.18em}
+  .woah-title .gif{display:inline-block;width:2.35em;height:.98em;border-radius:999px;overflow:hidden;flex:0 0 auto;background:#222}
+  .woah-title .gif img{width:100%;height:100%;object-fit:cover;display:block}
+  .woah-nav{display:flex;justify-content:flex-end;gap:clamp(14px, 2vw, 28px);margin-top:clamp(30px, 4vw, 60px)}
+  .woah-btn{
+    width:clamp(64px, 8vw, 118px);aspect-ratio:1;border-radius:50%;border:1.5px solid #fff;
+    display:grid;place-items:center;color:#fff;background:transparent;
+    transition:background .2s, color .2s, transform .2s;
+  }
+  .woah-btn svg{width:42%;height:42%}
+  .woah-btn:hover{background:#fff;color:#0b0b0b;transform:scale(1.06)}
+  .woah-btn:active{transform:scale(.96)}
+
+  .slider{
+    --sgap:clamp(20px, 4vw, 90px);display:flex;gap:var(--sgap);overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:6px;outline:none;
+  }
+  .slider::-webkit-scrollbar{display:none}
+  .pin{flex:0 0 calc(50% - var(--sgap) / 2);scroll-snap-align:start;transition:opacity .3s, transform .3s}
+  .pin.hide{display:none}
+  .poster{
+    position:relative;border-radius:8px;overflow:hidden;border:2.5px solid #0b0b0b;aspect-ratio:1 !important;
+    transition:transform .45s cubic-bezier(.2,1.5,.4,1), box-shadow .3s;
+  }
+  .pin:hover .poster{transform:scale(1.02)}
+  .poster .save{
+    position:absolute;top:12px;right:12px;z-index:5;padding:10px 16px;border-radius:999px;background:var(--red);color:#fff;
+    font:700 14px/1 var(--f-body);opacity:0;transform:translateY(-8px);transition:.25s;
+  }
+  .pin:hover .save{opacity:1;transform:none}
+  .cap{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 4px 0}
+  .cap b{font:700 15px/1.2 var(--f-body);color:#fff}
+  .cap span{font:500 11px/1 var(--f-mono);padding:5px 8px;border:1.5px solid #fff;color:#fff;border-radius:999px;text-transform:lowercase;white-space:nowrap}
+  @media (max-width:700px){
+    .woah-head{align-items:flex-start}
+    .pin{flex-basis:100%}
+  }
+
+  /* individual posters */
+  .p-night{aspect-ratio:3/4.2;background:#141414;color:#eee}
+  .p-night .spk{
+    position:absolute;width:115%;aspect-ratio:1;left:10%;top:18%;border-radius:50%;
+    background:repeating-radial-gradient(circle, #2a2a2a 0 6px, #0e0e0e 6px 14px, #3a3a3a 14px 16px);
+    box-shadow:inset 0 0 60px #000;
+  }
+  .p-night .spk::after{content:"";position:absolute;inset:34%;border-radius:50%;background:radial-gradient(circle at 35% 35%, #ff5f7a, var(--red) 40%, #5d0010)}
+  .p-night .vt{
+    position:absolute;left:-6px;top:10px;writing-mode:vertical-rl;transform:rotate(180deg);
+    font:400 76px/1 var(--f-block);color:transparent;-webkit-text-stroke:1.5px #777;
+  }
+  .p-night .nt{position:absolute;left:18px;right:14px;bottom:62px;font:400 54px/.85 var(--f-bubble);color:#fff;text-align:right;text-shadow:4px 4px 0 var(--red)}
+  .p-night .nm{position:absolute;left:16px;right:16px;bottom:16px;display:flex;justify-content:space-between;align-items:flex-end;font:500 11px/1.2 var(--f-mono);text-transform:uppercase}
+  .p-night .nm strong{font:400 34px/1 var(--f-block);color:var(--yolk)}
+
+  .p-og{aspect-ratio:1;background:#0c0c0c}
+  .p-laced{aspect-ratio:3/3.9;background:#e6dcc3}
+  .p-box{aspect-ratio:3/4;background:linear-gradient(160deg,var(--red),#6e0a15)}
+  .p-box .bt{position:absolute;left:14px;top:14px;font:400 30px/.9 var(--f-block);color:#fff;letter-spacing:-.01em}
+  .p-box .bt small{display:block;font:500 11px/1.4 var(--f-mono);letter-spacing:.2em;margin-top:6px}
+  .p-box svg{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:92%}
+
+  .p-drip{aspect-ratio:4/3;background:#e9e9e9;display:grid;place-items:center}
+  .p-drip .dt{
+    font:400 clamp(58px, 6vw, 80px)/.85 var(--f-drip);text-align:center;transform:rotate(-8deg);
+    background:linear-gradient(180deg,#fff6b0,#ffd21f 35%,#b77b00 60%,#ffe680 80%,#a86d00);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(3px 0 0 #111) drop-shadow(-3px 0 0 #111) drop-shadow(0 3px 0 #111) drop-shadow(0 -3px 0 #111)
+           drop-shadow(5px 0 0 #fff) drop-shadow(-5px 0 0 #fff) drop-shadow(0 5px 0 #fff) drop-shadow(0 -5px 0 #fff) drop-shadow(4px 8px 6px rgba(0,0,0,.25));
+  }
+
+  .p-sky{aspect-ratio:1;background:linear-gradient(180deg,#2a7fff 0%,#6fb7ff 60%,#bfe2ff 100%)}
+  .p-sky .cl{position:absolute;border-radius:999px;background:#fff;filter:blur(2px);opacity:.92}
+  .p-sky .cl::before,.p-sky .cl::after{content:"";position:absolute;background:#fff;border-radius:50%}
+  .p-sky .cl::before{width:55%;aspect-ratio:1;left:14%;bottom:30%}
+  .p-sky .cl::after{width:40%;aspect-ratio:1;right:14%;bottom:24%}
+  .p-sky .st{position:absolute;left:0;right:0;bottom:16px;text-align:center;font:400 46px/1 var(--f-bubble);color:#fff;text-shadow:3px 3px 0 var(--ink);-webkit-text-stroke:1.5px var(--ink)}
+  .p-sky .st small{display:block;font:500 11px/1.6 var(--f-mono);letter-spacing:.2em;-webkit-text-stroke:0;text-shadow:none;color:var(--ink)}
+  .p-sky svg{position:absolute;left:50%;top:18%;transform:translateX(-50%);width:78%}
+
+  .p-pencil{aspect-ratio:3/4.3;background:var(--sage);display:grid;place-items:center}
+  .p-pencil svg{width:62%;animation:bob 3s ease-in-out infinite}
+  @keyframes bob{50%{transform:translateY(-8px) rotate(-4deg)}}
+  .p-pencil .pt{position:absolute;left:16px;bottom:16px;font:400 22px/1 var(--f-marker);color:#fff;transform:rotate(-4deg)}
+
+  .p-radio{aspect-ratio:1;background:#f1f1f1;display:grid;place-items:center}
+  .p-radio svg{width:88%}
+  .p-mark{aspect-ratio:4/3.1;background:#3a3a3a;display:grid;place-items:center}
+  .p-mark svg{width:70%}
+
+  /* ---------- cta (holla at us) ---------- */
+  .cta{background:var(--cobalt);color:#fff;overflow:hidden;border-top:2.5px solid var(--ink)}
+  .cta-title{
+    font:400 clamp(3.2rem, 9.4vw, 9rem)/1 "Anton", "Impact", "Arial Narrow", sans-serif;
+    text-transform:uppercase;letter-spacing:.005em;color:#fff;
+  }
+  .cta-title .row{display:flex;align-items:center;gap:.2em;flex-wrap:wrap}
+  .cta-title .gif{display:inline-block;width:2.3em;height:.95em;border-radius:999px;overflow:hidden;flex:0 0 auto;background:#1a2fb8}
+  .cta-title .gif img{width:100%;height:100%;object-fit:cover;display:block}
+  .cta-sub{margin-top:clamp(28px, 4vw, 64px);font:500 clamp(1.2rem, 2.2vw, 2.2rem)/1.35 var(--f-body);max-width:32em}
+  .cta-links{display:flex;gap:clamp(30px, 6vw, 110px);flex-wrap:wrap;margin-top:clamp(50px, 8vw, 120px)}
+  .cta-links a{
+    display:inline-block;padding-bottom:clamp(16px, 2vw, 28px);border-bottom:1.5px solid rgba(255,255,255,.7);
+    font:700 clamp(1.15rem, 2.1vw, 2.1rem)/1 var(--f-body);letter-spacing:-.01em;text-transform:uppercase;color:#fff;
+    transition:color .2s, border-color .2s;
+  }
+  .cta-links a:hover{color:var(--yolk);border-color:var(--yolk)}
+
+  /* ---------- footer (video background) ---------- */
+  footer{
+    position:relative;isolation:isolate;overflow:hidden;color:var(--ink);
+    padding:clamp(90px, 12vw, 180px) 0 24px;background:var(--cobalt);
+  }
+  /* video fades in from the cobalt above: transparent at the top, solid lower down */
+  .foot-video{
+    position:absolute;inset:0;z-index:-1;width:100%;height:100%;object-fit:cover;pointer-events:none;
+    -webkit-mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.35) 18%, #000 45%);
+    mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.35) 18%, #000 45%);
+  }
+  .foot-wrap{position:relative;width:80%;margin:0 auto}
+  @media (max-width:700px){ .foot-wrap{width:calc(100% - 2*var(--gutter))} }
+  .foot-word{display:block;width:min(100%, 1100px);margin:0 auto 10px;transition:transform .4s cubic-bezier(.2,1.4,.4,1)}
+  .foot-word img{width:100%;height:auto;display:block;filter:drop-shadow(0 8px 12px rgba(0,0,0,.25))}
+  .foot-word:hover{transform:scale(1.02) rotate(-1deg)}
+  .foot-bot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font:500 12px/1 var(--f-mono);opacity:.8;margin-top:20px}
+
+  /* ---------- click pops ---------- */
+  .pop{
+    position:fixed;z-index:9990;pointer-events:none;padding:8px 14px;border:2.5px solid var(--ink);border-radius:14px;
+    font:400 20px/1 var(--f-bubble);box-shadow:3px 3px 0 var(--ink);white-space:nowrap;
+    animation:popFly 1s cubic-bezier(.2,1,.4,1) forwards;
+  }
+  @keyframes popFly{
+    0%{transform:translate(-50%,-50%) scale(.2) rotate(var(--r));opacity:1}
+    25%{transform:translate(calc(-50% + var(--dx)*.4),calc(-50% + var(--dy)*.4)) scale(1.15) rotate(var(--r))}
+    100%{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy) - 40px)) scale(.9) rotate(calc(var(--r)*-1));opacity:0}
+  }
+  body.shake{animation:shake .45s}
+  @keyframes shake{
+    10%,90%{transform:translate(-2px,1px)}20%,80%{transform:translate(4px,-2px)}
+    30%,50%,70%{transform:translate(-6px,3px) rotate(-.4deg)}40%,60%{transform:translate(6px,-3px) rotate(.4deg)}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+    .reveal{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"><span>TAP</span></div>
+
+<!-- reusable megaphone logo -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="megaGold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff07a"/><stop offset=".5" stop-color="#ffd21f"/><stop offset="1" stop-color="#ffab00"/>
+    </linearGradient>
+  </defs>
+  <symbol id="logo" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="46" fill="#960D1D" stroke="#0d0d0d" stroke-width="5"/>
+    <g transform="rotate(-18 50 50)">
+      <path d="M36 60 L31 76 L42 76 L46 60 Z" fill="#0d0d0d"/>
+      <rect x="16" y="41" width="18" height="18" rx="4" fill="#fff" stroke="#0d0d0d" stroke-width="4"/>
+      <path d="M33 40 L70 22 L70 78 L33 60 Z" fill="url(#megaGold)" stroke="#0d0d0d" stroke-width="4" stroke-linejoin="round"/>
+      <ellipse cx="70" cy="50" rx="7" ry="28" fill="#fff" stroke="#0d0d0d" stroke-width="4"/>
+      <path d="M82 40 q5 10 0 20" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+      <path d="M89 34 q9 16 0 32" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+    </g>
+  </symbol>
+</svg>
+
+<!-- ================= NAV ================= -->
+<nav class="nav">
+  <ul>
+    <li><a href="#top" class="active" data-hover="HI">Home</a></li>
+    <li><a href="#services" data-hover="GO">About us</a></li>
+    <li class="nav-logo"><a href="#top" class="brand" data-hover="HI"><img src="assets/images/logo.png" alt="Hypemann"></a></li>
+    <li><a href="#work" data-hover="GO">Products</a></li>
+    <li><a href="#contact" data-hover="GO">Check out</a></li>
+  </ul>
+</nav>
+
+<!-- ================= HERO ================= -->
+<div class="hero-frame">
+<header class="hero" id="top">
+  <!-- <img class="hero-sticker s-fire" src="assets/images/trail/sticker-red-fire.png" alt="" aria-hidden="true">
+  <img class="hero-sticker s-peace" src="assets/images/trail/sticker-red-peace.png" alt="" aria-hidden="true">
+  <img class="hero-sticker s-smiley" src="assets/images/trail/sticker-red-smiley.png" alt="" aria-hidden="true">
+  -->
+  <img class="hero-sticker s-tension" src="assets/images/trail/tension.png" alt="" aria-hidden="true">
+  <div class="hero-inner">
+    <h2 class="headline">
+      <span class="line"><span class="w">Branding that</span></span>
+      <span class="line">
+        <span class="w">CREATEs hype</span>
+        <span class="w gifbox" aria-hidden="true"><img src="assets/images/hype-meter.gif" alt=""></span>
+        <span class="w"><span class="amp">&amp;</span> Design that</span>
+      </span>
+      <span class="line">
+        <span class="w gifbox red" aria-hidden="true"><img src="assets/images/cat-clicking.gif" alt=""></span>
+        <span class="w yel">clicks</span>
+      </span>
+    </h2>
+</div>
+</header>
+</div>
+
+<!-- ================= MARQUEE ================= -->
+<div class="marquees" aria-hidden="true">
+  <div class="marquee m1">
+<div class="track">
+    <span>AI &amp; AUTOMATION <em>✦</em> LOGO <em>✦</em> WEBSITE DEVELOPMENT <em>✦</em> APPLICATION DEVELOPMENT <em>✦</em> BRANDING <em>✦</em></span>
+  </div><div class="track">
+    <span>AI &amp; AUTOMATION <em>✦</em> LOGO <em>✦</em> WEBSITE DEVELOPMENT <em>✦</em> APPLICATION DEVELOPMENT <em>✦</em> BRANDING <em>✦</em></span>
+  </div></div>
+</div>
+
+<!-- ================= SERVICES ================= -->
+<section class="abilities" id="services">
+  <div class="wrap">
+    <h2 class="ab-title reveal">
+      <span class="row">Our <span class="gif" aria-hidden="true"><img src="assets/images/abilities.avif" alt=""></span></span>
+      <span class="row">Abilities</span>
+    </h2>
+
+    <div class="ab-intro reveal">
+      <a href="#contact" class="ab-more" data-hover="GO">Learn more</a>
+      <p>Our abilities lie in building bold brand identities, intuitive UI/UX design, and packaging that sells. Every project is approached with curiosity and experimentation, combining artistry and strategy to deliver design that stands out and performs.</p>
+    </div>
+
+    <div class="ab-tabs reveal" role="tablist" aria-label="Services">
+      <button class="ab-tab on" type="button" role="tab" aria-selected="true" data-tab="services" data-hover="PICK">Services</button>
+    </div>
+
+    <div class="ab-panel on" data-panel="services" role="tabpanel">
+      <details class="ab-item" open>
+        <summary><span class="n">01</span><span class="t">AI &amp; Automation</span><span class="pm" aria-hidden="true"></span></summary>
+        <p>Custom AI agents, chatbots, and workflow automations that do the boring parts for you. We wire your tools together so leads get answered, content gets drafted, and reports write themselves.</p>
+      </details>
+      <details class="ab-item">
+        <summary><span class="n">02</span><span class="t">Logo</span><span class="pm" aria-hidden="true"></span></summary>
+        <p>Wordmarks, symbols, and lockups with a point of view. Logos so clean your competitors screenshot them, built to work on a billboard, a favicon, and a hoodie.</p>
+      </details>
+      <details class="ab-item">
+        <summary><span class="n">03</span><span class="t">Website Development</span><span class="pm" aria-hidden="true"></span></summary>
+        <p>Launch pages, portfolios, and full sites that load fast and convert. Designed and built to be the loudest thing in the tab bar, on purpose.</p>
+      </details>
+      <details class="ab-item">
+        <summary><span class="n">04</span><span class="t">Application Development</span><span class="pm" aria-hidden="true"></span></summary>
+        <p>iOS, Android, and web apps with interfaces that have personality: bold type, tight spacing, motion that means something. Researched, prototyped, tested, shipped.</p>
+      </details>
+      <details class="ab-item">
+        <summary><span class="n">05</span><span class="t">Branding</span><span class="pm" aria-hidden="true"></span></summary>
+        <div class="ab-sub">
+          <details class="ab-item">
+            <summary><span class="n">5.1</span><span class="t">Naming &amp; Nomenclature</span><span class="pm" aria-hidden="true"></span></summary>
+            <p>We create unique and memorable brand names and product names that reflect your identity and connect with your audience. Every name is distinctive, relevant, and built to strengthen your brand presence.</p>
+          </details>
+          <details class="ab-item">
+            <summary><span class="n">5.2</span><span class="t">Brand Strategy</span><span class="pm" aria-hidden="true"></span></summary>
+            <p>Positioning, voice, and a point of view your competitors can't copy. We map who you are, who you're for, and why anyone should care before a single pixel gets pushed.</p>
+          </details>
+          <details class="ab-item">
+            <summary><span class="n">5.3</span><span class="t">Brand Identity</span><span class="pm" aria-hidden="true"></span></summary>
+            <p>Type, color, and the whole system around your logo. An identity that stays consistent from the first post to the thousandth, and looks like you every time.</p>
+          </details>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WORK ================= -->
+<section class="work" id="work">
+  <div class="wrap">
+    <div class="woah-head reveal">
+      <h2 class="woah-title">
+        <span class="row">Our <span class="gif" aria-hidden="true"><img src="assets/images/cat-working.gif" alt=""></span></span>
+        <span class="row">Woahrk!</span>
+      </h2>
+    </div>
+
+    <div class="slider" tabindex="0" aria-label="Selected work">
+
+      <!-- 1 Night shift flyer -->
+      <figure class="pin" data-c="flyer" data-hover="VIEW">
+        <div class="poster p-night">
+          <span class="save">Save</span>
+          <div class="spk"></div>
+          <div class="vt">PARTY</div>
+          <div class="nt">NIGHT<br>SHIFT</div>
+          <div class="nm"><span>sat · vol.05<br>the warehouse</span><strong>09PM</strong></div>
+        </div>
+        <figcaption class="cap"><b>Night Shift vol.05</b><span>flyer</span></figcaption>
+      </figure>
+
+      <!-- 2 Hype OG hoodie -->
+      <figure class="pin" data-c="merch" data-hover="VIEW">
+        <div class="poster p-og">
+          <span class="save">Save</span>
+          <svg viewBox="0 0 300 300" aria-label="Hype OG hoodie badge">
+            <defs>
+              <linearGradient id="ogGold" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#fff3a0"/><stop offset=".45" stop-color="#ffd21f"/><stop offset=".7" stop-color="#c78a00"/><stop offset="1" stop-color="#ffe066"/>
+              </linearGradient>
+              <path id="ogArc" d="M52 150 A98 98 0 0 0 248 150"/>
+            </defs>
+            <rect width="300" height="300" fill="#0c0c0c"/>
+            <circle cx="150" cy="150" r="130" fill="none" stroke="#1d1d1d" stroke-width="30"/>
+            <path d="M52 150 A98 98 0 0 0 248 150" fill="none" stroke="#0d0d0d" stroke-width="58"/>
+            <path d="M52 150 A98 98 0 0 0 248 150" fill="none" stroke="url(#ogGold)" stroke-width="46"/>
+            <text font-family="Bungee, sans-serif" font-size="30" fill="#0d0d0d" letter-spacing="6" dominant-baseline="middle">
+              <textPath href="#ogArc" startOffset="50%" text-anchor="middle">HOODIE</textPath>
+            </text>
+            <path d="M34 108 L20 128 L34 148 M266 108 L280 128 L266 148" fill="none" stroke="url(#ogGold)" stroke-width="6" stroke-linejoin="round"/>
+            <rect x="40" y="96" width="220" height="66" rx="6" fill="#0c0c0c" stroke="url(#ogGold)" stroke-width="5"/>
+            <text x="150" y="148" text-anchor="middle" font-family="Bungee, sans-serif" font-size="48" fill="url(#ogGold)" stroke="#3b2800" stroke-width="1.5">HYPE OG</text>
+            <text x="150" y="70" text-anchor="middle" font-family="DM Mono, monospace" font-size="12" fill="#8a7a3a" letter-spacing="5">EST · 2026 · DROP 01</text>
+          </svg>
+        </div>
+        <figcaption class="cap"><b>Hype OG Hoodie</b><span>merch</span></figcaption>
+      </figure>
+
+      <!-- 3 Boxhead records -->
+      <figure class="pin" data-c="mascot" data-hover="VIEW">
+        <div class="poster p-box">
+          <span class="save">Save</span>
+          <div class="bt">BOXHEAD<br>RECORDS<small>MASCOT · 3D · 2026</small></div>
+          <svg viewBox="0 0 240 250" aria-label="Boxhead mascot">
+            <defs>
+              <radialGradient id="boxG" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#fff"/><stop offset=".7" stop-color="#eeeae3"/><stop offset="1" stop-color="#bdb6ab"/></radialGradient>
+            </defs>
+            <path d="M22 250 C28 180 66 158 120 158 C174 158 212 180 218 250 Z" fill="#111"/>
+            <rect x="106" y="138" width="28" height="30" fill="#7a4a2e"/>
+            <path d="M86 166 Q120 218 154 166" fill="none" stroke="#e8e8e8" stroke-width="5" stroke-dasharray="3 4"/>
+            <rect x="112" y="200" width="16" height="20" rx="4" fill="#eee" stroke="#999" stroke-width="2"/>
+            <path d="M190 250 C200 215 206 190 222 176" fill="none" stroke="#111" stroke-width="26" stroke-linecap="round"/>
+            <g fill="#111">
+              <circle cx="66" cy="44" r="15"/><circle cx="88" cy="32" r="16"/><circle cx="112" cy="26" r="17"/><circle cx="136" cy="28" r="16"/>
+              <circle cx="158" cy="36" r="16"/><circle cx="176" cy="50" r="14"/><circle cx="58" cy="62" r="12"/><circle cx="184" cy="68" r="11"/>
+            </g>
+            <rect x="52" y="44" width="136" height="112" rx="32" fill="url(#boxG)" stroke="#111" stroke-width="5"/>
+            <ellipse cx="96" cy="96" rx="11" ry="19" fill="#111"/><ellipse cx="144" cy="96" rx="11" ry="19" fill="#111"/>
+            <circle cx="92" cy="89" r="4" fill="#fff"/><circle cx="140" cy="89" r="4" fill="#fff"/>
+            <path d="M98 126 Q120 146 142 126" fill="none" stroke="#111" stroke-width="6" stroke-linecap="round"/>
+            <ellipse cx="72" cy="120" rx="9" ry="5" fill="#ff8fa3" opacity=".7"/><ellipse cx="168" cy="120" rx="9" ry="5" fill="#ff8fa3" opacity=".7"/>
+          </svg>
+        </div>
+        <figcaption class="cap"><b>Boxhead Records</b><span>mascot</span></figcaption>
+      </figure>
+
+      <!-- 4 Drip szn -->
+      <figure class="pin" data-c="logo" data-hover="VIEW">
+        <div class="poster p-drip">
+          <span class="save">Save</span>
+          <div class="dt">Drip<br>Szn</div>
+        </div>
+        <figcaption class="cap"><b>Drip Szn wordmark</b><span>logo</span></figcaption>
+      </figure>
+
+      <!-- 5 Laced up crew -->
+      <figure class="pin" data-c="logo" data-hover="VIEW">
+        <div class="poster p-laced">
+          <span class="save">Save</span>
+          <svg viewBox="0 0 300 390" aria-label="Laced Up Crew logo with basketball character">
+            <defs><path id="lcArc" d="M40 120 A110 110 0 0 1 260 120"/></defs>
+            <rect width="300" height="390" fill="#e6dcc3"/>
+            <text font-family="DM Mono, monospace" font-size="14" fill="#0d0d0d" letter-spacing="4">
+              <textPath href="#lcArc" startOffset="50%" text-anchor="middle">INTERNATIONAL CREW</textPath>
+            </text>
+            <text x="150" y="98" text-anchor="middle" font-family="DM Mono, monospace" font-size="13" fill="#0d0d0d" letter-spacing="3">· LACED UP ·</text>
+            <text x="150" y="152" text-anchor="middle" font-family="Bagel Fat One, sans-serif" font-size="62" fill="#ffd21f" stroke="#0d0d0d" stroke-width="10" paint-order="stroke" transform="rotate(-4 150 150)">CREW</text>
+            <text x="18" y="250" font-family="DM Mono, monospace" font-size="11" fill="#0d0d0d" letter-spacing="4" transform="rotate(-90 18 250)">HYPEMAN</text>
+            <text x="284" y="200" font-family="DM Mono, monospace" font-size="11" fill="#0d0d0d" letter-spacing="4" transform="rotate(90 284 200)">SZN 26</text>
+            <g transform="translate(55 160)">
+              <path d="M85 150 C80 180 92 196 72 214" fill="none" stroke="#0d0d0d" stroke-width="7" stroke-linecap="round"/>
+              <path d="M115 150 C120 180 108 196 128 214" fill="none" stroke="#0d0d0d" stroke-width="7" stroke-linecap="round"/>
+              <path d="M44 212 H80 a10 10 0 0 1 0 20 H40 a8 8 0 0 1 4 -20 Z" fill="#ffd21f" stroke="#0d0d0d" stroke-width="5"/>
+              <path d="M120 212 H156 a8 8 0 0 1 4 20 H120 a10 10 0 0 1 0 -20 Z" fill="#ffd21f" stroke="#0d0d0d" stroke-width="5"/>
+              <path d="M40 104 C18 110 12 126 22 142" fill="none" stroke="#0d0d0d" stroke-width="7" stroke-linecap="round"/>
+              <circle cx="24" cy="146" r="10" fill="#fff" stroke="#0d0d0d" stroke-width="4"/>
+              <circle cx="100" cy="100" r="62" fill="#ff6a1f" stroke="#0d0d0d" stroke-width="6"/>
+              <g fill="none" stroke="#0d0d0d" stroke-width="4">
+                <path d="M38 100 H162"/><path d="M100 38 V162"/><path d="M58 56 Q86 100 58 144"/><path d="M142 56 Q114 100 142 144"/>
+              </g>
+              <ellipse cx="82" cy="92" rx="21" ry="25" fill="#fff" stroke="#0d0d0d" stroke-width="5"/>
+              <ellipse cx="120" cy="92" rx="21" ry="25" fill="#fff" stroke="#0d0d0d" stroke-width="5"/>
+              <circle cx="88" cy="98" r="8" fill="#0d0d0d"/><circle cx="126" cy="98" r="8" fill="#0d0d0d"/>
+              <path d="M86 130 Q100 144 116 128" fill="none" stroke="#0d0d0d" stroke-width="5" stroke-linecap="round"/>
+              <path d="M158 92 C182 78 184 58 174 40" fill="none" stroke="#0d0d0d" stroke-width="7" stroke-linecap="round"/>
+              <g class="spinball" style="transform-origin:172px 22px;animation:spin 1.2s linear infinite">
+                <circle cx="172" cy="22" r="15" fill="#ff6a1f" stroke="#0d0d0d" stroke-width="4"/>
+                <path d="M157 22 H187 M172 7 V37" stroke="#0d0d0d" stroke-width="3"/>
+              </g>
+            </g>
+          </svg>
+        </div>
+        <figcaption class="cap"><b>Laced Up Crew</b><span>logo</span></figcaption>
+      </figure>
+
+      <!-- 6 Sky high -->
+      <figure class="pin" data-c="campaign" data-hover="VIEW">
+        <div class="poster p-sky">
+          <span class="save">Save</span>
+          <div class="cl" style="width:46%;height:16%;left:-8%;top:58%"></div>
+          <div class="cl" style="width:38%;height:12%;right:-6%;top:12%"></div>
+          <div class="cl" style="width:30%;height:10%;left:8%;top:6%;opacity:.7"></div>
+          <svg viewBox="0 0 260 130" aria-label="Mirrored visor sunglasses">
+            <defs>
+              <linearGradient id="visorG" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#ffe45c"/><stop offset=".4" stop-color="#ff8a00"/><stop offset=".75" stop-color="#e0421b"/><stop offset="1" stop-color="#ffb347"/>
+              </linearGradient>
+            </defs>
+            <rect x="6" y="28" width="248" height="12" rx="6" fill="#0d0d0d"/>
+            <path d="M12 44 C18 22 242 22 248 44 C252 90 206 116 156 98 Q130 88 104 98 C54 116 8 90 12 44 Z" fill="url(#visorG)" stroke="#0d0d0d" stroke-width="6" stroke-linejoin="round"/>
+            <path d="M34 52 C60 40 90 40 110 48" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".75"/>
+            <path d="M170 76 C190 76 210 70 226 58" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".5"/>
+          </svg>
+          <div class="st"><small>SUMMER CAMPAIGN</small>SKY HIGH</div>
+        </div>
+        <figcaption class="cap"><b>Sky High summer</b><span>campaign</span></figcaption>
+      </figure>
+
+      <!-- 7 Megaphone mark -->
+      <figure class="pin" data-c="logo" data-hover="VIEW">
+        <div class="poster p-mark">
+          <span class="save">Save</span>
+          <svg viewBox="0 0 240 150" aria-label="HM megaphone monogram">
+            <text x="10" y="112" font-family="Bagel Fat One, sans-serif" font-size="110" fill="#6b8cae">H</text>
+            <g transform="translate(98 22)">
+              <path d="M0 40 L20 40 L20 82 L0 82 Z" fill="#fff"/>
+              <path d="M24 38 L118 0 L118 122 L24 84 Z" fill="#fff"/>
+              <path d="M24 56 L118 34 M24 66 L118 60 M24 76 L118 88" stroke="#3a3a3a" stroke-width="6"/>
+              <path d="M40 84 L30 118 L50 118 L58 90 Z" fill="#fff"/>
+            </g>
+          </svg>
+        </div>
+        <figcaption class="cap"><b>HM megaphone mark</b><span>logo</span></figcaption>
+      </figure>
+
+      <!-- 8 Pencil guy -->
+      <figure class="pin" data-c="mascot" data-hover="VIEW">
+        <div class="poster p-pencil">
+          <span class="save">Save</span>
+          <svg viewBox="0 0 200 200" aria-label="Beanie character chewing a pencil">
+            <defs><radialGradient id="pinkG" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#ffe0dc"/><stop offset=".6" stop-color="#f9aca6"/><stop offset="1" stop-color="#e0837d"/></radialGradient></defs>
+            <circle cx="44" cy="120" r="16" fill="url(#pinkG)" stroke="#0d0d0d" stroke-width="4"/>
+            <circle cx="156" cy="120" r="16" fill="url(#pinkG)" stroke="#0d0d0d" stroke-width="4"/>
+            <circle cx="100" cy="118" r="58" fill="url(#pinkG)" stroke="#0d0d0d" stroke-width="5"/>
+            <path d="M42 100 C40 36 160 36 158 100 Z" fill="#2f6bff" stroke="#0d0d0d" stroke-width="5"/>
+            <path d="M70 58 Q90 46 112 48" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="6" stroke-linecap="round"/>
+            <rect x="36" y="86" width="128" height="26" rx="11" fill="#4a82ff" stroke="#0d0d0d" stroke-width="5"/>
+            <path d="M70 124 a12 12 0 0 0 24 0 Z" fill="#fff" stroke="#0d0d0d" stroke-width="3.5"/>
+            <path d="M106 124 a12 12 0 0 0 24 0 Z" fill="#fff" stroke="#0d0d0d" stroke-width="3.5"/>
+            <circle cx="83" cy="130" r="4" fill="#0d0d0d"/><circle cx="119" cy="130" r="4" fill="#0d0d0d"/>
+            <ellipse cx="100" cy="146" rx="9" ry="7" fill="#ff8b86" stroke="#0d0d0d" stroke-width="3"/>
+            <g transform="rotate(-10 100 164)">
+              <rect x="66" y="159" width="62" height="10" fill="#ffd21f" stroke="#0d0d0d" stroke-width="2.5"/>
+              <rect x="58" y="159" width="9" height="10" fill="#ff7aa0" stroke="#0d0d0d" stroke-width="2.5"/>
+              <path d="M128 159 L142 164 L128 169 Z" fill="#f2c9a0" stroke="#0d0d0d" stroke-width="2.5" stroke-linejoin="round"/>
+            </g>
+          </svg>
+          <div class="pt">overthinking studio™</div>
+        </div>
+        <figcaption class="cap"><b>Overthinking Studio</b><span>mascot</span></figcaption>
+      </figure>
+
+      <!-- 9 Radio badge -->
+      <figure class="pin" data-c="logo" data-hover="VIEW">
+        <div class="poster p-radio">
+          <span class="save">Save</span>
+          <svg viewBox="0 0 300 300" aria-label="Hypeman Radio badge">
+            <defs>
+              <linearGradient id="ringG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2f4dff"/><stop offset="1" stop-color="#960D1D"/></linearGradient>
+              <radialGradient id="radBg" cx=".5" cy=".4" r=".7"><stop offset="0" stop-color="#1b2466"/><stop offset="1" stop-color="#05081c"/></radialGradient>
+            </defs>
+            <circle cx="150" cy="150" r="138" fill="url(#radBg)" stroke="url(#ringG)" stroke-width="14"/>
+            <g fill="none" stroke-width="3" opacity=".8">
+              <path d="M60 90 Q150 40 240 90" stroke="#28e0ff"/><path d="M50 215 Q150 270 250 215" stroke="#ff4fd8"/>
+              <path d="M80 70 Q150 30 220 70" stroke="#b6ff3a"/>
+            </g>
+            <rect x="136" y="44" width="28" height="46" rx="14" fill="#ddd" stroke="#0d0d0d" stroke-width="4"/>
+            <path d="M126 72 Q126 98 150 98 Q174 98 174 72 M150 98 V110" fill="none" stroke="#ddd" stroke-width="4"/>
+            <text x="150" y="146" text-anchor="middle" font-family="Bungee, sans-serif" font-size="30" fill="#960D1D" stroke="#fff" stroke-width="5" paint-order="stroke">HYPEMAN</text>
+            <text x="150" y="212" text-anchor="middle" font-family="Bagel Fat One, sans-serif" font-size="76" fill="#2f4dff" stroke="#fff" stroke-width="9" paint-order="stroke">RADIO</text>
+            <text x="150" y="246" text-anchor="middle" font-family="DM Mono, monospace" font-size="11" fill="#aab" letter-spacing="4">24/7 · LIVE · LOUD</text>
+          </svg>
+        </div>
+        <figcaption class="cap"><b>Hypeman Radio</b><span>logo</span></figcaption>
+      </figure>
+
+    </div>
+    <div class="woah-nav reveal">
+      <button class="woah-btn woah-prev" type="button" aria-label="Previous project" data-hover="PREV">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M30 10 L16 24 L30 38 M16 24 H44" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="woah-btn woah-next" type="button" aria-label="Next project" data-hover="NEXT">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M18 10 L32 24 L18 38 M32 24 H4" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="cta" id="contact">
+  <div class="wrap">
+    <h2 class="cta-title reveal">
+      <span class="row">Ready to take</span>
+      <span class="row">your brand on <span class="gif" aria-hidden="true"><img src="assets/images/wild-ride.gif" alt=""></span></span>
+      <span class="row">a wild ride?</span>
+    </h2>
+    <p class="cta-sub reveal">Give us a holla. We reply faster than your situationship.</p>
+    <div class="cta-links reveal">
+      <a href="mailto:hello@hypeman.studio" data-hover="SEND">Write to us</a>
+      <a href="#" data-hover="MAP">Drop in at our office</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <video class="foot-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+    <source src="assets/video/comic.mp4" type="video/mp4">
+  </video>
+  <div class="foot-wrap">
+    <a href="#top" class="foot-word" data-hover="UP"><img src="assets/images/logo.png" alt="Hypemann"></a>
+    <div class="foot-bot"><span>© 2026 hypemann studio. all rights reserved, all vibes shared.</span><span>branding that pops &amp; design that clicks.</span></div>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* cursor */
+  const cur = document.getElementById('cursor');
+  const label = cur.querySelector('span');
+  let mx = innerWidth / 2, my = innerHeight / 2, cx = mx, cy = my;
+  addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  (function loop(){
+    cx += (mx - cx) * 0.22; cy += (my - cy) * 0.22;
+    cur.style.left = cx + 'px'; cur.style.top = cy + 'px';
+    requestAnimationFrame(loop);
+  })();
+  document.querySelectorAll('[data-hover]').forEach(el => {
+    el.addEventListener('mouseenter', () => { cur.classList.add('big'); label.textContent = el.dataset.hover; });
+    el.addEventListener('mouseleave', () => cur.classList.remove('big'));
+  });
+
+  /* nav: highlight the section in view */
+  const navLinks = [...document.querySelectorAll('.nav ul a:not(.brand)')];
+  const spy = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (!en.isIntersecting) return;
+      navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + en.target.id));
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  navLinks.forEach(a => { const sec = document.querySelector(a.getAttribute('href')); if (sec) spy.observe(sec); });
+
+  /* hero sticker trail: stickers pop along the cursor, one after another, hero only */
+  (() => {
+    const hero = document.querySelector('.hero');
+    if (!hero || matchMedia('(hover:none)').matches) return;
+    const names = ['sticker-1','sticker-blob','sticker-bomb','sticker-dog','sticker-duck','sticker-fire','sticker-hypeman',
+                   'sticker-lips','sticker-love','sticker-org','sticker-smiley','sticker-spark','sticker-spark2','sticker-star'];
+    const srcs = names.map(n => 'assets/images/trail/' + n + '.png');
+    srcs.forEach(src => { const im = new Image(); im.src = src; });
+    let idx = 0, lastX = -999, lastY = -999, live = 0;
+    const GAP = 55, MAX = 24;
+    hero.addEventListener('mouseenter', () => cur.classList.add('hide'));
+    hero.addEventListener('mouseleave', () => cur.classList.remove('hide'));
+    hero.addEventListener('mousemove', e => {
+      if (Math.hypot(e.clientX - lastX, e.clientY - lastY) < GAP) return;
+      lastX = e.clientX; lastY = e.clientY;
+      if (live >= MAX) return;
+      const img = document.createElement('img');
+      img.className = 'trail-img'; img.alt = ''; img.src = srcs[idx++ % srcs.length];
+      img.style.left = e.clientX + 'px'; img.style.top = e.clientY + 'px';
+      img.style.setProperty('--r', (Math.random() * 36 - 18).toFixed(1) + 'deg');
+      document.body.appendChild(img); live++;
+      img.addEventListener('animationend', () => { img.remove(); live--; }, { once: true });
+    });
+  })();
+
+  /* click pops */
+  const words = ['HYPE!', 'W', 'NO CAP', 'SLAY', 'BUSSIN', 'LOUD', 'ICONIC', 'FR FR', 'GOATED', '🔥', '💯', 'SHEESH'];
+  const colors = [['#ffd21f', '#0d0d0d'], ['#960D1D', '#fff'], ['#2f4dff', '#fff'], ['#bfeccd', '#0d0d0d'], ['#e7d9ff', '#0d0d0d'], ['#f7b9a6', '#0d0d0d']];
+  function pop(x, y, spread = 60) {
+    const el = document.createElement('div');
+    const [bg, fg] = colors[Math.random() * colors.length | 0];
+    el.className = 'pop';
+    el.textContent = words[Math.random() * words.length | 0];
+    el.style.left = x + 'px'; el.style.top = y + 'px';
+    el.style.background = bg; el.style.color = fg;
+    el.style.setProperty('--dx', (Math.random() - .5) * spread * 2 + 'px');
+    el.style.setProperty('--dy', -(Math.random() * spread + 20) + 'px');
+    el.style.setProperty('--r', (Math.random() - .5) * 40 + 'deg');
+    document.body.appendChild(el);
+    el.addEventListener('animationend', () => el.remove());
+  }
+  addEventListener('click', e => {
+    if (reduce || e.target.closest('a, button')) return;
+    pop(e.clientX, e.clientY);
+  });
+
+  /* hype meter */
+  const btn = document.getElementById('hypeBtn'), fill = document.getElementById('hypeFill'), lvl = document.getElementById('hypeLvl');
+  const ranks = ['mid', 'warming up', 'kinda lit', 'lit', 'bussin', 'unhinged', 'GOATED', 'LEGENDARY'];
+  let level = 0;
+  if (btn) btn.addEventListener('click', e => {
+    level++;
+    const pct = Math.min(100, 8 + level * 13);
+    fill.style.width = pct + '%';
+    lvl.textContent = `lvl ${level} · ${ranks[Math.min(ranks.length - 1, level)]}`;
+    const r = btn.getBoundingClientRect();
+    const n = Math.min(24, 5 + level * 2);
+    for (let i = 0; i < n; i++) setTimeout(() => pop(r.left + r.width / 2, r.top + 10, 120 + level * 20), i * 25);
+    if (!reduce) {
+      document.body.classList.remove('shake'); void document.body.offsetWidth; document.body.classList.add('shake');
+    }
+    if (pct >= 100) { btn.textContent = 'MAX HYPE 🔥'; }
+  });
+  document.body.addEventListener('animationend', e => { if (e.target === document.body) document.body.classList.remove('shake'); });
+
+  /* reveal on scroll */
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (!en.isIntersecting) return;
+      const el = en.target;
+      const sibs = [...el.parentElement.children].filter(c => c.classList.contains('reveal'));
+      el.style.transitionDelay = Math.min(sibs.indexOf(el), 6) * 70 + 'ms';
+      el.classList.add('in');
+      io.unobserve(el);
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* abilities: tabs switch panels, one accordion item open per panel */
+  document.querySelectorAll('.ab-tab').forEach(tab => tab.addEventListener('click', () => {
+    document.querySelectorAll('.ab-tab').forEach(t => { const on = t === tab; t.classList.toggle('on', on); t.setAttribute('aria-selected', on); });
+    document.querySelectorAll('.ab-panel').forEach(p => p.classList.toggle('on', p.dataset.panel === tab.dataset.tab));
+  }));
+  document.querySelectorAll('.ab-item').forEach(item => item.addEventListener('toggle', () => {
+    if (!item.open) return;
+    item.parentElement.querySelectorAll('.ab-item[open]').forEach(o => { if (o !== item) o.open = false; });
+  }));
+
+  /* work slider: arrows step one slide, wrapping at the ends */
+  const slider = document.querySelector('.slider');
+  if (slider) {
+    const step = () => {
+      const first = slider.querySelector('.pin');
+      const gap = parseFloat(getComputedStyle(slider).columnGap) || 0;
+      return first ? first.getBoundingClientRect().width + gap : slider.clientWidth;
+    };
+    const maxLeft = () => slider.scrollWidth - slider.clientWidth;
+    document.querySelector('.woah-prev').addEventListener('click', () => {
+      if (slider.scrollLeft <= 2) slider.scrollTo({ left: maxLeft(), behavior: 'smooth' });
+      else slider.scrollBy({ left: -step(), behavior: 'smooth' });
+    });
+    document.querySelector('.woah-next').addEventListener('click', () => {
+      if (slider.scrollLeft >= maxLeft() - 2) slider.scrollTo({ left: 0, behavior: 'smooth' });
+      else slider.scrollBy({ left: step(), behavior: 'smooth' });
+    });
+    slider.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') document.querySelector('.woah-next').click();
+      if (e.key === 'ArrowLeft') document.querySelector('.woah-prev').click();
+    });
+  }
+})();
+</script>
+</body>
+</html>

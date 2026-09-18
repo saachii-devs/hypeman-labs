@@ -2,23 +2,25 @@
 
 import { m, useReducedMotion } from "framer-motion";
 import Image from "next/image";
+import { useCallback, useState } from "react";
 import { Reveal } from "./reveal";
-import khataserve from "@/assets/images/work/khataserve.png";
-import khanpaan from "@/assets/images/work/khanpaan.png";
-import unisoul from "@/assets/images/work/unisoul.png";
-import cardMockup from "@/assets/images/work/hypemann-card-mockup.png";
+import { Lightbox } from "./lightbox";
+import { WORK, type WorkItem } from "@/data/work";
 
 /* per-tile stagger, same on the way in and out */
 const DELAY = [0, 0.15, 0.1, 0.2];
 const EASE: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
 const LIFT: [number, number, number, number] = [0.2, 0.8, 0.2, 1];
 
-type PinProps = { i: number; tags: string[]; title: string; children: React.ReactNode; className: string };
+type PinProps = { i: number; item: WorkItem; onOpen: (item: WorkItem) => void };
 
 /* One collage tile: fades in when it enters the viewport and back out when it leaves. */
-function Pin({ i, tags, title, children, className }: PinProps) {
+function Pin({ i, item, onOpen }: PinProps) {
   const reduce = useReducedMotion();
-  const delay = DELAY[i];
+  const delay = DELAY[i % DELAY.length];
+  const cover = item.images[0];
+  const count = item.images.length;
+
   return (
     <m.figure
       className="pin"
@@ -31,14 +33,30 @@ function Pin({ i, tags, title, children, className }: PinProps) {
         y: { duration: 1, ease: LIFT, delay },
       }}
     >
-      <div className={`poster ${className}`}>
-        <span className="save">Save</span>
-        {children}
-      </div>
+      <button
+        type="button"
+        className="poster p-shot"
+        onClick={() => onOpen(item)}
+        aria-label={`Open ${item.title} (${count} ${count === 1 ? "image" : "images"})`}
+      >
+        <span className="save">{count > 1 ? `View · ${count}` : "View"}</span>
+        <Image src={cover.src} alt={cover.alt} fill sizes="(max-width: 700px) 100vw, 50vw" placeholder="blur" />
+      </button>
       <figcaption className="cap">
-        <b>{title}</b>
+        <b>
+          {item.url ? (
+            <a href={item.url} target="_blank" rel="noopener noreferrer" data-hover="VISIT">
+              {item.title}
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 17L17 7M9 7h8v8" />
+              </svg>
+            </a>
+          ) : (
+            item.title
+          )}
+        </b>
         <span className="tags">
-          {tags.map((t) => (
+          {item.tags.map((t) => (
             <span key={t}>{t}</span>
           ))}
         </span>
@@ -48,6 +66,15 @@ function Pin({ i, tags, title, children, className }: PinProps) {
 }
 
 export function Work() {
+  const [active, setActive] = useState<WorkItem | null>(null);
+  const [index, setIndex] = useState(0);
+
+  const open = useCallback((item: WorkItem) => {
+    setIndex(0);
+    setActive(item);
+  }, []);
+  const close = useCallback(() => setActive(null), []);
+
   return (
     <section className="relative bg-night text-white" id="work">
       <div className="wrap">
@@ -64,51 +91,13 @@ export function Work() {
         </Reveal>
 
         <div className="collage" aria-label="Selected work">
-          {/* 1 Khataserve */}
-          <Pin i={0} className="p-shot" title="Khataserve" tags={["logo", "web", "seo", "ai automation"]}>
-            <Image
-              src={khataserve}
-              alt="Khataserve bookkeeping website on a laptop and a phone"
-              fill
-              sizes="(max-width: 700px) 100vw, 50vw"
-              placeholder="blur"
-            />
-          </Pin>
-
-          {/* 2 KhanpaanAI */}
-          <Pin i={1} className="p-shot" title="KhanpaanAI" tags={["logo", "branding"]}>
-            <Image
-              src={khanpaan}
-              alt="KhanpaanAI logo, an AI based restaurant management system"
-              fill
-              sizes="(max-width: 700px) 100vw, 50vw"
-              placeholder="blur"
-            />
-          </Pin>
-
-          {/* 3 Unisoul */}
-          <Pin i={2} className="p-shot" title="Unisoul" tags={["logo", "web", "branding", "ai automation"]}>
-            <Image
-              src={unisoul}
-              alt="Unisoul lotus logo and wordmark"
-              fill
-              sizes="(max-width: 700px) 100vw, 50vw"
-              placeholder="blur"
-            />
-          </Pin>
-
-          {/* 4 Hypemann business card */}
-          <Pin i={3} className="p-shot" title="Hypemann business card" tags={["card design"]}>
-            <Image
-              src={cardMockup}
-              alt="Hypemann business cards, front and back, stacked on a wooden desk"
-              fill
-              sizes="(max-width: 700px) 100vw, 50vw"
-              placeholder="blur"
-            />
-          </Pin>
+          {WORK.map((item, i) => (
+            <Pin key={item.slug} i={i} item={item} onOpen={open} />
+          ))}
         </div>
       </div>
+
+      <Lightbox item={active} index={index} onIndexChange={setIndex} onClose={close} />
     </section>
   );
 }
