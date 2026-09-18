@@ -30,6 +30,36 @@ npm run lint
     └── video/            footer loop
 ```
 
+## Supabase
+
+Project ref: `gjhwuhwqgniykfydlygs`. Keys live in `.env.local` (git-ignored); `.env.example` lists the names.
+
+```
+utils/supabase/client.ts      browser client for Client Components
+utils/supabase/server.ts      per-request client for Server Components, actions, route handlers
+utils/supabase/middleware.ts  updateSession(): refreshes the auth cookie on each request
+proxy.ts                      Next.js 16 request proxy (was middleware.ts before 16) that calls updateSession
+supabase/config.toml          local CLI config from `supabase init`
+```
+
+Usage in a Server Component:
+
+```ts
+import { createClient } from "@/utils/supabase/server";
+
+const supabase = await createClient();
+const { data } = await supabase.from("your_table").select();
+```
+
+Link the CLI to the hosted project once (needs a browser login):
+
+```
+npx supabase login
+npx supabase link --project-ref gjhwuhwqgniykfydlygs
+```
+
+Use `supabase.auth.getClaims()` (not `getSession()`) to protect server-rendered pages. New tables are not exposed to the Data API automatically; enable RLS and grant access when you create them.
+
 ## Notes
 
 - Fonts load through `next/font`, so there is no request to Google Fonts at runtime and no layout shift.

@@ -6,9 +6,9 @@ import logo from "@/assets/images/logo.png";
 
 const LINKS = [
   { id: "top", label: "Home", hover: "HI" },
-  { id: "services", label: "About us", hover: "GO" },
-  { id: "work", label: "Products", hover: "GO" },
-  { id: "contact", label: "Check out", hover: "GO" },
+  { id: "services", label: "Abilities", hover: "GO" },
+  { id: "work", label: "Work", hover: "GO" },
+  { id: "contact", label: "Contact", hover: "GO" },
 ] as const;
 
 export function Nav() {
