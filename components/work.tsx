@@ -85,7 +85,7 @@ export function Work() {
               <span className="title-gif" aria-hidden="true">
                 <Image src="/images/cat-working.webp" alt="" fill sizes="300px" unoptimized />
               </span>
-            </span>
+            </span>{" "}
             <span className="flex items-center gap-[.18em]">Woahrk!</span>
           </h2>
         </Reveal>

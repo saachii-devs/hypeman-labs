@@ -1,4 +1,4 @@
-# Hypemann Studios
+# Hypeman Labs
 
 Single-page studio site built with Next.js (App Router), TypeScript, Tailwind CSS v4 and Framer Motion.
 

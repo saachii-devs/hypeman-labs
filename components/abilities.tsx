@@ -74,7 +74,7 @@ export function Abilities() {
             <span className="title-gif" aria-hidden="true">
               <Image src="/images/abilities.avif" alt="" fill sizes="300px" unoptimized />
             </span>
-          </span>
+          </span>{" "}
           <span className="flex items-center gap-[.18em]">Abilities</span>
         </Reveal>
 

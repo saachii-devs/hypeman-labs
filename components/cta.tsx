@@ -10,7 +10,7 @@ export function Cta() {
         <Reveal as="h2" className="cta-title" index={0}>
           <span className="flex flex-wrap items-center gap-[.2em]">
             Ready to take
-          </span>
+          </span>{" "}
           <span className="flex flex-wrap items-center gap-[.2em]">
             your brand on{" "}
             <span className="title-gif max-[700px]:hidden" aria-hidden="true">
@@ -22,7 +22,7 @@ export function Cta() {
                 unoptimized
               />
             </span>
-          </span>
+          </span>{" "}
           <span className="flex flex-wrap items-center gap-[.2em]">
             a wild ride?
             {/* on phones the gif moves here, after the last line, instead of wrapping mid-title */}

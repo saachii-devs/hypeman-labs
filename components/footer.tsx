@@ -11,7 +11,7 @@ export function Footer() {
           <Image src={logo} alt="Hypemann" sizes="(max-width: 700px) 100vw, (max-width: 1375px) 80vw, 1100px" />
         </a>
         <div className="foot-bot">
-          <span>© 2026 hypemann studio. all rights reserved, all vibes shared.</span>
+          <span>© 2026 hypeman labs. all rights reserved, all vibes shared.</span>
           <span>branding that pops &amp; design that clicks.</span>
         </div>
       </div>

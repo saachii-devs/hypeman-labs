@@ -86,32 +86,34 @@ export function Hero() {
       <div className="hero-frame">
         <header className="hero" id="top" onMouseMove={onMove}>
           <div className="relative z-[2] mx-auto w-[92%] text-center max-[700px]:w-full">
-            <h2 className="headline">
+            {/* Whitespace text nodes between the word spans are discarded by the flex
+                line boxes, but they keep the extracted text readable to crawlers. */}
+            <h1 className="headline">
               <span className="line">
                 <m.span className="w" {...word(0)}>
                   Branding that
                 </m.span>
-              </span>
+              </span>{" "}
               <span className="line">
                 <m.span className="w" {...word(1)}>
                   CREATEs hype
-                </m.span>
+                </m.span>{" "}
                 <m.span className="w gifbox" aria-hidden="true" {...word(1)}>
                   <Image src="/images/hype-meter.webp" alt="" fill sizes="300px" unoptimized priority />
-                </m.span>
+                </m.span>{" "}
                 <m.span className="w" {...word(1)}>
                   <span className="amp">&amp;</span> Design that
                 </m.span>
-              </span>
+              </span>{" "}
               <span className="line">
                 <m.span className="w gifbox red" aria-hidden="true" {...word(2)}>
                   <Image src="/images/cat-clicking.gif" alt="" fill sizes="300px" unoptimized priority />
-                </m.span>
+                </m.span>{" "}
                 <m.span className="w yel" {...word(2)}>
                   clicks
                 </m.span>
               </span>
-            </h2>
+            </h1>
           </div>
         </header>
       </div>

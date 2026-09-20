@@ -16,7 +16,7 @@ import khanpaanCover from "@/assets/images/work/khanpaan/cover.png";
 import unisoulCover from "@/assets/images/work/unisoul/cover.png";
 import unisoulBrand from "@/assets/images/work/unisoul/03.png";
 import unisoulSite from "@/assets/images/work/unisoul/04.png";
-import cardCover from "@/assets/images/work/hypemann-card/cover.png";
+import cardCover from "@/assets/images/work/hypeman-card/cover.png";
 
 export type WorkImage = { src: StaticImageData; alt: string };
 
@@ -59,9 +59,9 @@ export const WORK: WorkItem[] = [
     ],
   },
   {
-    slug: "hypemann-card",
-    title: "Hypemann business card",
+    slug: "hypeman-card",
+    title: "Hypeman business card",
     tags: ["card design"],
-    images: [{ src: cardCover, alt: "Hypemann business cards, front and back, stacked on a wooden desk" }],
+    images: [{ src: cardCover, alt: "Hypeman business cards, front and back, stacked on a wooden desk" }],
   },
 ];
